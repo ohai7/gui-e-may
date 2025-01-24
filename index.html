@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centralizar e Ordenar</title>
+    <style>
+   body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            background-color: rgb(97, 41, 150);
+            color: #ffffff;
+        }
+        #contador {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .fotos {
+            width: 45vh;
+            height: 60vh;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .carrossel {
+            display: flex;
+            width: 100%; /* Mesma largura da classe .fotos */
+            height: 100%; /* Mesma altura da classe .fotos */
+            transition: transform 0.5s ease-in-out;
+        }
+        .carrossel img {
+            flex-shrink: 0; /* Impede que as imagens encolham */
+            width: 100%; /* Preenche o contêiner */
+            height: 100%; /* Preenche o contêiner */
+            object-fit: cover; /* Garante que a imagem se ajuste ao espaço */
+        }
+        .btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .btn-prev {
+            left: 10px;
+            border-radius: 5px 0 0 5px;
+        }
+        .btn-next {
+            right: 10px;
+            border-radius: 0 5px 5px 0;
+        }
+        a {
+            color: #ffffff;
+            font-style: italic;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="fotos">
+        <div class="carrossel" id="carrossel">
+            <img src="may e gui 1.jpg" alt="Foto 1">
+            <img src="may e gui 2.jpg" alt="Foto 2">
+            <img src="may e gui 3.jpg" alt="Foto 3">
+        </div>
+        <button class="btn btn-prev" onclick="mudarSlide(-1)">&#10094;</button>
+        <button class="btn btn-next" onclick="mudarSlide(1)">&#10095;</button>
+    </div>
+    <a>Juntos:</a>
+    <p id="contador">Calculando...</p>
+    <a>_</a>
+    <a>y desde entonces soy porque tú eres, y desde entonces eres, soy y somos, y por amor seré, serás, seremos</a>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">
+        Assistir ao vídeo
+    </a>
+
+    <script>
+        // Data inicial
+        const dataInicial = new Date('2024-12-01');
+
+        // Função para calcular os meses, semanas e dias
+        function atualizarContador() {
+            const dataAtual = new Date();
+            const diferencaEmMilissegundos = dataAtual - dataInicial;
+
+            const diasTotais = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
+            const meses = Math.floor(diasTotais / 30); // Aproximação para meses
+            const semanas = Math.floor((diasTotais % 30) / 7);
+            const dias = diasTotais % 7;
+
+            document.getElementById('contador').innerText = 
+                `${meses} meses, ${semanas} semanas e ${dias} dias desde 01/12/2024`;
+        }
+
+        // Atualiza o contador
+        atualizarContador();
+
+        // Lógica do carrossel
+        const carrossel = document.getElementById('carrossel');
+        let indiceAtual = 0;
+
+        function mudarSlide(direcao) {
+            const totalSlides = carrossel.children.length;
+            indiceAtual = (indiceAtual + direcao + totalSlides) % totalSlides;
+            const deslocamento = -indiceAtual * 100; // Move para o próximo slide
+            carrossel.style.transform = `translateX(${deslocamento}%)`;
+        }
+    </script>
+</body>
+</html>
